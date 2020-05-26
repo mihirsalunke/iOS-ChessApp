@@ -9,9 +9,19 @@
 import UIKit
 
 class BoardView: UIView {
+    
+    var pieces = Set<ChessPiece>()
 
     override func draw(_ rect: CGRect) {
         drawBoard()
+        drawPieces()
+    }
+    
+    func drawPieces() {
+        for piece in pieces {
+            let pieceImage = UIImage(named: piece.imageName)
+            pieceImage?.draw(in: CGRect(x: piece.col * 40, y: piece.row * 40, width: 40, height: 40))
+        }
     }
     
     func drawBoard() {
