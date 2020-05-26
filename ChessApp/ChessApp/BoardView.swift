@@ -11,10 +11,28 @@ import UIKit
 class BoardView: UIView {
     
     var pieces = Set<ChessPiece>()
+    var chessDelegate: ChessDelegate?
+    var fromCol = -1
+    var fromRow = -1
 
     override func draw(_ rect: CGRect) {
         drawBoard()
         drawPieces()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let fingerLocation = touch.location(in: self)
+        fromCol = Int(fingerLocation.x / 40)
+        fromRow = Int(fingerLocation.y / 40)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let fingerLocation = touch.location(in: self)
+        let toCol = Int(fingerLocation.x / 40)
+        let toRow = Int(fingerLocation.y / 40)
+        chessDelegate?.movePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
     }
     
     func drawPieces() {

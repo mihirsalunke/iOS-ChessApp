@@ -16,6 +16,7 @@
 		E7E30FA9247D04A200E54F9A /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30FA8247D04A200E54F9A /* BoardView.swift */; };
 		E7E30FAB247D09AE00E54F9A /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30FAA247D09AE00E54F9A /* ChessPiece.swift */; };
 		E7E30FAD247D0A0000E54F9A /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30FAC247D0A0000E54F9A /* ChessEngine.swift */; };
+		E7E30FAF247D0CD500E54F9A /* ChessDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30FAE247D0CD500E54F9A /* ChessDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E7E30FA8247D04A200E54F9A /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		E7E30FAA247D09AE00E54F9A /* ChessPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPiece.swift; sourceTree = "<group>"; };
 		E7E30FAC247D0A0000E54F9A /* ChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
+		E7E30FAE247D0CD500E54F9A /* ChessDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				E7E30FA8247D04A200E54F9A /* BoardView.swift */,
 				E7E30FAA247D09AE00E54F9A /* ChessPiece.swift */,
 				E7E30FAC247D0A0000E54F9A /* ChessEngine.swift */,
+				E7E30FAE247D0CD500E54F9A /* ChessDelegate.swift */,
 			);
 			path = ChessApp;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			files = (
 				E7E30FAD247D0A0000E54F9A /* ChessEngine.swift in Sources */,
 				E7E30F99247C9E4500E54F9A /* ViewController.swift in Sources */,
+				E7E30FAF247D0CD500E54F9A /* ChessDelegate.swift in Sources */,
 				E7E30FA9247D04A200E54F9A /* BoardView.swift in Sources */,
 				E7E30F95247C9E4500E54F9A /* AppDelegate.swift in Sources */,
 				E7E30FAB247D09AE00E54F9A /* ChessPiece.swift in Sources */,

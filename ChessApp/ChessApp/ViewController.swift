@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ChessDelegate {
     
     var chessEngine = ChessEngine()
 
@@ -20,8 +20,15 @@ class ViewController: UIViewController {
         chessEngine.initializeGame()
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
+        
+        boardView.chessDelegate = self
     }
 
+    func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
+        chessEngine.movePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
+        boardView.pieces = chessEngine.pieces
+        boardView.setNeedsDisplay()
+    }
 
 }
 
