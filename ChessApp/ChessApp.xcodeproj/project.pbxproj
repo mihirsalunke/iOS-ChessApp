@@ -13,6 +13,7 @@
 		E7E30F9C247C9E4500E54F9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7E30F9A247C9E4500E54F9A /* Main.storyboard */; };
 		E7E30F9E247C9E4700E54F9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7E30F9D247C9E4700E54F9A /* Assets.xcassets */; };
 		E7E30FA1247C9E4700E54F9A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7E30F9F247C9E4700E54F9A /* LaunchScreen.storyboard */; };
+		E7E30FA9247D04A200E54F9A /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30FA8247D04A200E54F9A /* BoardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E7E30F9D247C9E4700E54F9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7E30FA0247C9E4700E54F9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E7E30FA2247C9E4700E54F9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7E30FA8247D04A200E54F9A /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				E7E30F9D247C9E4700E54F9A /* Assets.xcassets */,
 				E7E30F9F247C9E4700E54F9A /* LaunchScreen.storyboard */,
 				E7E30FA2247C9E4700E54F9A /* Info.plist */,
+				E7E30FA8247D04A200E54F9A /* BoardView.swift */,
 			);
 			path = ChessApp;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7E30F99247C9E4500E54F9A /* ViewController.swift in Sources */,
+				E7E30FA9247D04A200E54F9A /* BoardView.swift in Sources */,
 				E7E30F95247C9E4500E54F9A /* AppDelegate.swift in Sources */,
 				E7E30F97247C9E4500E54F9A /* SceneDelegate.swift in Sources */,
 			);
