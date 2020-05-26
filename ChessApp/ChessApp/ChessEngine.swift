@@ -70,4 +70,30 @@ struct ChessEngine {
         pieces.insert(ChessPiece(col: 6, row: 6, imageName: "Pawn-white"))
         pieces.insert(ChessPiece(col: 7, row: 6, imageName: "Pawn-white"))
     }
+    
+    func identifyPiece(_ piece: ChessPiece) -> String {
+        if piece.imageName == "Knight-white" || piece.imageName == "Knight-black" {
+            return "Knight"
+        } else if piece.imageName == "Bishop-white" || piece.imageName == "Bishop-black" {
+            return "Bishop"
+        } else if piece.imageName == "Rook-white" || piece.imageName == "Rook-black" {
+            return "Rook"
+        } else if piece.imageName == "King-white" || piece.imageName == "King-black" {
+            return "King"
+        } else if piece.imageName == "Queen-white" || piece.imageName == "Queen-black" {
+            return "Queen"
+        } else if piece.imageName == "Pawn-white" || piece.imageName == "Pawn-black" {
+            return "Pawn"
+        }
+        return "Invalid Piece"
+    }
+    
+    func identifyPieceColor(_ piece: ChessPiece) -> String {
+        if piece.imageName == "Knight-white" || piece.imageName == "Bishop-white" || piece.imageName == "Rook-white" || piece.imageName == "King-white" || piece.imageName == "Queen-white" || piece.imageName == "Pawn-white" {
+            return "white"
+        } else if piece.imageName == "Knight-black" || piece.imageName == "Bishop-black" || piece.imageName == "Rook-black" || piece.imageName == "King-black" || piece.imageName == "Queen-black" || piece.imageName == "Pawn-black" {
+            return "black"
+        }
+        return "Invalid Piece"
+    }
 }
