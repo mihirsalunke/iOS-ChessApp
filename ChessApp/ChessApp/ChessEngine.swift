@@ -176,6 +176,41 @@ struct ChessEngine {
     
     mutating func isValidKingMove(for movingPiece: ChessPiece, fromRow: Int, fromCol: Int, toRow: Int, toCol: Int) -> Bool {
         
+        //check castle move
+        if fromRow == toRow && (fromRow == 0 && identifyPieceColor(movingPiece) == "black") {
+            if (fromCol == 4 && toCol == 6) {
+                if pieceAt(col: toCol, row: toRow) != nil {
+                    return false
+                }
+                movePiece(piece: pieceAt(col: 7, row: 0)!, toCol: 5, toRow: 0)
+                return true
+            }
+            if (fromCol == 4 && toCol == 2) {
+                if pieceAt(col: toCol, row: toRow) != nil {
+                    return false
+                }
+                movePiece(piece: pieceAt(col: 0, row: 0)!, toCol: 3, toRow: 0)
+                return true
+            }
+        }
+        if fromRow == toRow && (fromRow == 7 && identifyPieceColor(movingPiece) == "white") {
+            if (fromCol == 4 && toCol == 6) {
+                if pieceAt(col: toCol, row: toRow) != nil {
+                    return false
+                }
+                movePiece(piece: pieceAt(col: 7, row: 7)!, toCol: 5, toRow: 7)
+                return true
+            }
+            if (fromCol == 4 && toCol == 2) {
+                if pieceAt(col: toCol, row: toRow) != nil {
+                    return false
+                }
+                movePiece(piece: pieceAt(col: 0, row: 7)!, toCol: 3, toRow: 7)
+                return true
+            }
+        }
+        
+        //check normal king move
         let differenceInRows = abs(toRow - fromRow)
         let differenceInCols = abs(toCol - fromCol)
         
