@@ -32,7 +32,7 @@ class BoardView: UIView {
         let fingerLocation = touch.location(in: self)
         let toCol = Int(fingerLocation.x / 40)
         let toRow = Int(fingerLocation.y / 40)
-        chessDelegate?.movePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
+        chessDelegate?.makePlayerMove(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
     }
     
     func drawPieces() {

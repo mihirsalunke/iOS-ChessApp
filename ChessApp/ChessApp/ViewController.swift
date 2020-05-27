@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import PromiseKit
 
-class ViewController: UIViewController, ChessDelegate {
+class ViewController: UIViewController {
     
     var chessEngine = ChessEngine()
     
@@ -39,6 +42,8 @@ class ViewController: UIViewController, ChessDelegate {
             promptForColorSelection(viewController: self)
         }
         
+        //set new game by calling "https://chess-api-chess.herokuapp.com/api/v1/chess/one" or "https://chess-api-chess.herokuapp.com/api/v1/chess/two" depending on the game mode
+        getNewGame()
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
         self.updateTurnOnScreen()
@@ -87,17 +92,6 @@ class ViewController: UIViewController, ChessDelegate {
             
         viewController.present(box, animated: true, completion: nil)
     }
-
-    func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
-        //check if the move is valid
-        if chessEngine.isMoveValid(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
-            //then actually move piece
-            chessEngine.movePiece(piece: chessEngine.pieceAt(col: fromCol, row: fromRow)!, toCol: toCol, toRow: toRow)
-        }
-        boardView.pieces = chessEngine.pieces
-        boardView.setNeedsDisplay()
-        self.updateTurnOnScreen()
-    }
     
     func nextTurn() {
         isWhiteTurn = !isWhiteTurn
@@ -107,6 +101,82 @@ class ViewController: UIViewController, ChessDelegate {
     func updateTurnOnScreen() {
         lblDisplayTurn.text = isWhiteTurn ? "White's turn" : "Black's turn"
         lblDisplayTurn.textColor = isWhiteTurn ? #colorLiteral(red: 0.979090035, green: 0.963788569, blue: 1, alpha: 1) : #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1)
+    }
+    
+    func updateStatus(message: String, color: UIColor) {
+        lblDisplayStatus.text = message
+        lblDisplayStatus.textColor = color
+    }
+    
+    func getNewGameURL() -> String {
+        if gameMode == "singleplayer" {
+            return "\(gameURL)/chess/one"
+        } else if gameMode == "multiplayer" {
+            return "\(gameURL)/chess/two"
+        } else {
+            return gameURL
+        }
+    }
+    
+    func getNewGame() {
+        let newGameURL = getNewGameURL()
+        print("making api call to get new game at url: \(newGameURL)")
+        print("----------------------------------------------")
+        self.updateStatus(message: "Creating New Game...", color: #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1))
+        
+        Alamofire.request(newGameURL).responseJSON { response in
+            print(response)
+            if response.result.isSuccess {
+                let gameJSON: JSON = JSON(response.result.value!)
+                if gameJSON["game_id"].exists() {
+                    let gameID = gameJSON["game_id"].stringValue
+                    self.setGameID(gameID: gameID)
+                    
+                    print("response is: \(gameJSON)")
+                    print("----------------------------------------------")
+                    print("gameID is: \(self.getGameID())")
+                    print("----------------------------------------------")
+                    
+                    let status = gameJSON["status"].stringValue
+                    self.updateStatus(message: status, color: #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1))
+                } else {
+                    self.updateStatus(message: "Error Occured...", color: #colorLiteral(red: 0.866481483, green: 0, blue: 0, alpha: 1))
+                    
+                    let box = UIAlertController(title: "Start New Game", message: "Error occured in creating new game", preferredStyle: .alert)
+
+                    box.addAction(UIAlertAction(title: "Yes", style: .default, handler: {
+                        action in
+                        
+                        self.getNewGame()
+                    }))
+
+                    box.addAction(UIAlertAction(title: "No", style: .default, handler: {
+                        action in
+                        
+                        self.performSegue(withIdentifier: "backToMainMenu", sender: self)
+                    }))
+                        
+                    self.present(box, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func getPossibleMovesURL() -> String {
+        return "\(getNewGameURL())/moves"
+    }
+    
+    func getPossibleMoves(for position: String) {
+        let possibleMovesURL = getPossibleMovesURL()
+        print("making api call to get possible moves at url: \(possibleMovesURL)")
+        print("----------------------------------------------")
+        print("with parameters: game_id=\(gameID!), from=\(position)")
+        print("----------------------------------------------")
+        
+        Alamofire.request(possibleMovesURL, method: .post, parameters: ["game_id": gameID!, "from": position], encoding: JSONEncoding.default).responseJSON { response in
+            print("response is: \(response)")
+            print("----------------------------------------------")
+        }
     }
     
     func mapMoves(row: Int, col: Int) -> String {
@@ -206,3 +276,20 @@ class ViewController: UIViewController, ChessDelegate {
 
 }
 
+extension ViewController: ChessDelegate {
+    
+    func makePlayerMove(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
+        
+        //get move in chess notation
+        let fromMove = mapMoves(row: fromRow, col: fromCol)
+        let toMove = mapMoves(row: toRow, col: toCol)
+        print("Piece moved from: \(fromMove), to: \(toMove)")
+        print("----------------------------------------------")
+        if chessEngine.isMoveValid(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
+            //then actually move piece
+            chessEngine.movePiece(piece: chessEngine.pieceAt(col: fromCol, row: fromRow)!, toCol: toCol, toRow: toRow)
+        }
+        boardView.pieces = chessEngine.pieces
+        boardView.setNeedsDisplay()
+    }
+}

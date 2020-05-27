@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ChessDelegate {
-  func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int)
+  func makePlayerMove(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int)
 }
