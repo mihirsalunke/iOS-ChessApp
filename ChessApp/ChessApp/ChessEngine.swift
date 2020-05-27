@@ -111,6 +111,8 @@ struct ChessEngine {
             return isValidKnightMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
         } else if identifyPiece(movingPiece) == "Bishop" {
             return isValidBishopMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
+        } else if identifyPiece(movingPiece) == "Rook" {
+            return isValidRookMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
         }
         return false
     }
@@ -129,6 +131,19 @@ struct ChessEngine {
     
     mutating func isValidBishopMove(for movingPiece: ChessPiece, fromRow: Int, fromCol: Int, toRow: Int, toCol: Int) -> Bool {
         if abs(toCol - fromCol) == abs(toRow - fromRow) {
+            
+            if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                pieces.remove(pieceAt(col: toCol, row: toRow)!)
+            } else if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) == identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    
+    mutating func isValidRookMove(for movingPiece: ChessPiece, fromRow: Int, fromCol: Int, toRow: Int, toCol: Int) -> Bool {
+        if abs(toCol - fromCol) == 0 || abs(toRow - fromRow) == 0 {
             
             if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
                 pieces.remove(pieceAt(col: toCol, row: toRow)!)
