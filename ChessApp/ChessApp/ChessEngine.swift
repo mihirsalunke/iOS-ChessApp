@@ -250,6 +250,31 @@ struct ChessEngine {
             moveForward = -1
         }
         
+        //tries enpassant
+        if toRow == fromRow + moveForward {
+            if (toCol == fromCol - 1) || (toCol == fromCol + 1) {
+                if fromRow == 4 && toRow == 5 && identifyPieceColor(movingPiece) == "black" {
+                    if pieceAt(col: toCol, row: toRow) == nil {
+                        if pieceAt(col: toCol, row: toRow - moveForward) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow - moveForward)!) {
+                            pieces.remove(pieceAt(col: toCol, row: toRow - moveForward)!)
+                            return true
+                        }
+                    }
+                }
+            }
+            if (toCol == fromCol - 1) || (toCol == fromCol + 1) {
+                if fromRow == 3 && toRow == 2 && identifyPieceColor(movingPiece) == "white" {
+                    if pieceAt(col: toCol, row: toRow) == nil {
+                        if pieceAt(col: toCol, row: toRow - moveForward) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow - moveForward)!) {
+                            pieces.remove(pieceAt(col: toCol, row: toRow - moveForward)!)
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+            
+        //tries to move by 1
         if toRow == fromRow + moveForward {
             if (toCol == fromCol - 1) || (toCol == fromCol) || (toCol == fromCol + 1) {
                 if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
