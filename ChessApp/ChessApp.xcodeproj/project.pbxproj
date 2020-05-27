@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF62022EE564F8650706A471 /* Pods_ChessApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFC1C9787965C6775ED72A5 /* Pods_ChessApp.framework */; };
 		E7E30F95247C9E4500E54F9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30F94247C9E4500E54F9A /* AppDelegate.swift */; };
 		E7E30F97247C9E4500E54F9A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30F96247C9E4500E54F9A /* SceneDelegate.swift */; };
 		E7E30F99247C9E4500E54F9A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E30F98247C9E4500E54F9A /* ViewController.swift */; };
@@ -21,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A56F9F2B3D2C1A617C5BDA8D /* Pods-ChessApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChessApp.debug.xcconfig"; path = "Target Support Files/Pods-ChessApp/Pods-ChessApp.debug.xcconfig"; sourceTree = "<group>"; };
+		ABFC1C9787965C6775ED72A5 /* Pods_ChessApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChessApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACA23792E3A3E2A5BB06EF8B /* Pods-ChessApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChessApp.release.xcconfig"; path = "Target Support Files/Pods-ChessApp/Pods-ChessApp.release.xcconfig"; sourceTree = "<group>"; };
 		E7E30F91247C9E4500E54F9A /* ChessApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7E30F94247C9E4500E54F9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7E30F96247C9E4500E54F9A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,17 +45,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF62022EE564F8650706A471 /* Pods_ChessApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5848FD696C9F1AB9C8FEE40B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ABFC1C9787965C6775ED72A5 /* Pods_ChessApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEBDFB1A75B9DCA0E78BCA5D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A56F9F2B3D2C1A617C5BDA8D /* Pods-ChessApp.debug.xcconfig */,
+				ACA23792E3A3E2A5BB06EF8B /* Pods-ChessApp.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E7E30F88247C9E4500E54F9A = {
 			isa = PBXGroup;
 			children = (
 				E7E30F93247C9E4500E54F9A /* ChessApp */,
 				E7E30F92247C9E4500E54F9A /* Products */,
+				CEBDFB1A75B9DCA0E78BCA5D /* Pods */,
+				5848FD696C9F1AB9C8FEE40B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,9 +114,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E7E30FA5247C9E4700E54F9A /* Build configuration list for PBXNativeTarget "ChessApp" */;
 			buildPhases = (
+				CFD64D6E58A4142288AD0764 /* [CP] Check Pods Manifest.lock */,
 				E7E30F8D247C9E4500E54F9A /* Sources */,
 				E7E30F8E247C9E4500E54F9A /* Frameworks */,
 				E7E30F8F247C9E4500E54F9A /* Resources */,
+				46D1CE0DB75260AC815157BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -147,6 +174,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46D1CE0DB75260AC815157BF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChessApp/Pods-ChessApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChessApp/Pods-ChessApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChessApp/Pods-ChessApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CFD64D6E58A4142288AD0764 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChessApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E7E30F8D247C9E4500E54F9A /* Sources */ = {
@@ -302,6 +371,7 @@
 		};
 		E7E30FA6247C9E4700E54F9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A56F9F2B3D2C1A617C5BDA8D /* Pods-ChessApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -319,6 +389,7 @@
 		};
 		E7E30FA7247C9E4700E54F9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACA23792E3A3E2A5BB06EF8B /* Pods-ChessApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
