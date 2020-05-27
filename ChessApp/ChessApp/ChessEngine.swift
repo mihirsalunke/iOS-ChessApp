@@ -106,7 +106,7 @@ struct ChessEngine {
             return false
         }
         
-        //pieces rules
+        //checking if the move follows pieces rules
         if identifyPiece(movingPiece) == "Knight" {
             return isValidKnightMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
         } else if identifyPiece(movingPiece) == "Bishop" {

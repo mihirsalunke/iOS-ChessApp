@@ -12,7 +12,14 @@ class ViewController: UIViewController, ChessDelegate {
     
     var chessEngine = ChessEngine()
     
+    var gameMode: String!
+    var gameID: String! = "1"
+    var isAgainstAI: Bool!
     var isWhiteTurn = true
+    var userColor: String!
+    var AIColor: String!
+    
+    let gameURL = "https://chess-api-chess.herokuapp.com/api/v1"
 
     @IBOutlet weak var boardView: BoardView!
     
@@ -26,9 +33,59 @@ class ViewController: UIViewController, ChessDelegate {
         chessEngine.initializeGame()
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
-        self.updateTurnOnScreen()
-        
         boardView.chessDelegate = self
+        
+        if self.isAgainstAI {
+            promptForColorSelection(viewController: self)
+        }
+        
+        boardView.pieces = chessEngine.pieces
+        boardView.setNeedsDisplay()
+        self.updateTurnOnScreen()
+    }
+    
+    func setGameMode(gameMode: String) {
+        self.gameMode = gameMode
+    }
+    
+    func getGameMode() -> String {
+        return self.gameMode
+    }
+    
+    func setGameID(gameID: String) {
+        self.gameID = gameID
+    }
+    
+    func getGameID() -> String {
+        return self.gameID
+    }
+    
+    func promptForColorSelection(viewController: ViewController) {
+        let box = UIAlertController(title: "Start Game", message: "Choose color", preferredStyle: .alert)
+
+        box.addAction(UIAlertAction(title: "White", style: .default, handler: {
+            action in
+            //set color
+            self.userColor = "white"
+            self.AIColor = "black"
+            self.isWhiteTurn = true
+            print("Player is: \(action.title!)")
+            print("----------------------------------------------")
+            self.updateTurnOnScreen()
+        }))
+
+        box.addAction(UIAlertAction(title: "Black", style: .default, handler: {
+            action in
+            //set color
+            self.userColor = "black"
+            self.AIColor = "white"
+            self.isWhiteTurn = true
+            print("Player is: \(action.title!)")
+            print("----------------------------------------------")
+            self.updateTurnOnScreen()
+        }))
+            
+        viewController.present(box, animated: true, completion: nil)
     }
 
     func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
