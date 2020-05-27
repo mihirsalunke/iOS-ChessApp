@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController, ChessDelegate {
     
     var chessEngine = ChessEngine()
+    
+    var isWhiteTurn = true
 
     @IBOutlet weak var boardView: BoardView!
     
@@ -24,6 +26,7 @@ class ViewController: UIViewController, ChessDelegate {
         chessEngine.initializeGame()
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
+        self.updateTurnOnScreen()
         
         boardView.chessDelegate = self
     }
@@ -36,6 +39,17 @@ class ViewController: UIViewController, ChessDelegate {
         }
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
+        self.updateTurnOnScreen()
+    }
+    
+    func nextTurn() {
+        isWhiteTurn = !isWhiteTurn
+        updateTurnOnScreen()
+    }
+    
+    func updateTurnOnScreen() {
+        lblDisplayTurn.text = isWhiteTurn ? "White's turn" : "Black's turn"
+        lblDisplayTurn.textColor = isWhiteTurn ? #colorLiteral(red: 0.979090035, green: 0.963788569, blue: 1, alpha: 1) : #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1)
     }
 
 }
