@@ -179,6 +179,88 @@ class ViewController: UIViewController {
         }
     }
     
+    //suggestion is only available in singleplayer mode
+    func getSuggestionURL() -> String {
+        return "\(getNewGameURL())/help"
+    }
+    
+    func getSuggestion() {
+        let suggestionURL = getSuggestionURL()
+        print("making api call to get move suggestions at url: \(suggestionURL)")
+        print("----------------------------------------------")
+        print("with parameters: game_id=\(gameID!)")
+        print("----------------------------------------------")
+        Alamofire.request(suggestionURL, method: .post, parameters: ["game_id": gameID!], encoding: JSONEncoding.default).responseJSON { response in
+            print("response is: \(response)")
+            print("----------------------------------------------")
+        }
+    }
+    
+    func getCheckGameOverURL() -> String {
+        return "\(getNewGameURL())/check"
+    }
+    
+    func gameOver() {
+        var winner = ""
+        if isWhiteTurn {
+            winner = "Black"
+        } else {
+            winner = "White"
+        }
+        
+        let box = UIAlertController(title: "Game Over", message: "\(winner) wins", preferredStyle: .alert)
+        
+        box.addAction(UIAlertAction(title: "Back to main menu", style: .default, handler: {
+            action in self.performSegue(withIdentifier: "backToMainMenu", sender: self)
+        }))
+        
+        box.addAction(UIAlertAction(title: "Rematch", style: .default, handler: {
+            action in
+            
+            self.chessEngine.initializeGame()
+            self.boardView.pieces = self.chessEngine.pieces
+            self.boardView.setNeedsDisplay()
+            
+            self.boardView.chessDelegate = self
+            
+            if self.isAgainstAI {
+                self.promptForColorSelection(viewController: self)
+            }
+            
+            self.getNewGame()
+            
+        }))
+        
+        self.present(box, animated: true, completion: nil)
+    }
+    
+    func gameDraw() {
+        let box = UIAlertController(title: "Game Over", message: "It was a draw..!!", preferredStyle: .alert)
+        
+        box.addAction(UIAlertAction(title: "Back to main menu", style: .default, handler: {
+            action in self.performSegue(withIdentifier: "backToMainMenu", sender: self)
+        }))
+        
+        box.addAction(UIAlertAction(title: "Rematch", style: .default, handler: {
+            action in
+            
+            self.chessEngine.initializeGame()
+            self.boardView.pieces = self.chessEngine.pieces
+            self.boardView.setNeedsDisplay()
+            
+            self.boardView.chessDelegate = self
+            
+            if self.isAgainstAI {
+                self.promptForColorSelection(viewController: self)
+            }
+            
+            self.getNewGame()
+            
+        }))
+        
+        self.present(box, animated: true, completion: nil)
+    }
+    
     func mapMoves(row: Int, col: Int) -> String {
         var move: String = ""
         switch col {
