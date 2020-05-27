@@ -113,6 +113,10 @@ struct ChessEngine {
             return isValidBishopMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
         } else if identifyPiece(movingPiece) == "Rook" {
             return isValidRookMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
+        } else if identifyPiece(movingPiece) == "King" {
+            return isValidKingMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
+        } else if identifyPiece(movingPiece) == "Queen" {
+            return isValidQueenMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
         }
         return false
     }
@@ -151,6 +155,37 @@ struct ChessEngine {
                 return false
             }
             return true
+        }
+        return false
+    }
+    
+    mutating func isValidQueenMove(for movingPiece: ChessPiece, fromRow: Int, fromCol: Int, toRow: Int, toCol: Int) -> Bool {
+        if abs(toCol - fromCol) == abs(toRow - fromRow) || abs(toCol - fromCol) == 0 || abs(toRow - fromRow) == 0 {
+
+            if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                pieces.remove(pieceAt(col: toCol, row: toRow)!)
+            } else if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) == identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    
+    mutating func isValidKingMove(for movingPiece: ChessPiece, fromRow: Int, fromCol: Int, toRow: Int, toCol: Int) -> Bool {
+        
+        let differenceInRows = abs(toRow - fromRow)
+        let differenceInCols = abs(toCol - fromCol)
+        
+        if case 0...1 = differenceInRows {
+            if case 0...1 = differenceInCols {
+                if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                    pieces.remove(pieceAt(col: toCol, row: toRow)!)
+                } else if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) == identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                    return false
+                }
+                return true
+            }
         }
         return false
     }
