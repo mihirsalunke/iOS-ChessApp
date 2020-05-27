@@ -10,7 +10,7 @@
         <!--Chess-->
         <scene sceneID="Z7S-IZ-EdO">
             <objects>
-                <viewController id="sRF-SL-eou" sceneMemberID="viewController">
+                <viewController id="sRF-SL-eou" customClass="StartScreen" customModule="ChessApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ldk-gL-n1I">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
