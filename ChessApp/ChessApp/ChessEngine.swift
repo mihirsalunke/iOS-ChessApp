@@ -117,6 +117,8 @@ struct ChessEngine {
             return isValidKingMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
         } else if identifyPiece(movingPiece) == "Queen" {
             return isValidQueenMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
+        } else if identifyPiece(movingPiece) == "Pawn" {
+            return isValidPawnMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
         }
         return false
     }
@@ -179,6 +181,42 @@ struct ChessEngine {
         
         if case 0...1 = differenceInRows {
             if case 0...1 = differenceInCols {
+                if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                    pieces.remove(pieceAt(col: toCol, row: toRow)!)
+                } else if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) == identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                    return false
+                }
+                return true
+            }
+        }
+        return false
+    }
+    
+    mutating func isValidPawnMove(for movingPiece: ChessPiece, fromRow: Int, fromCol: Int, toRow: Int, toCol: Int) -> Bool {
+        
+        //tries to advance by 2
+        if fromCol == toCol {
+            if (fromRow == 1 && toRow == 3 && identifyPieceColor(movingPiece) == "black") || (fromRow == 6 && toRow == 4 && identifyPieceColor(movingPiece) == "white") {
+                if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                    pieces.remove(pieceAt(col: toCol, row: toRow)!)
+                } else if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) == identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                    return false
+                }
+                return true
+            }
+        }
+        
+        //tries to advance by 1
+        var moveForward = 0
+            
+        if identifyPieceColor(movingPiece) == "black" {
+            moveForward = 1
+        } else {
+            moveForward = -1
+        }
+        
+        if toRow == fromRow + moveForward {
+            if (toCol == fromCol - 1) || (toCol == fromCol) || (toCol == fromCol + 1) {
                 if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
                     pieces.remove(pieceAt(col: toCol, row: toRow)!)
                 } else if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) == identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
