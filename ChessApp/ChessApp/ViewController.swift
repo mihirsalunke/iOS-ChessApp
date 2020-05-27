@@ -14,6 +14,10 @@ class ViewController: UIViewController, ChessDelegate {
 
     @IBOutlet weak var boardView: BoardView!
     
+    @IBOutlet weak var lblDisplayStatus: UILabel!
+    
+    @IBOutlet weak var lblDisplayTurn: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
