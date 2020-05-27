@@ -25,7 +25,11 @@ class ViewController: UIViewController, ChessDelegate {
     }
 
     func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
-        chessEngine.movePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
+        //check if the move is valid
+        if chessEngine.isMoveValid(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
+            //then actually move piece
+            chessEngine.movePiece(piece: chessEngine.pieceAt(col: fromCol, row: fromRow)!, toCol: toCol, toRow: toRow)
+        }
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
     }

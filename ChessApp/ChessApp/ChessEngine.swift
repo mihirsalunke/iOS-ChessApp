@@ -20,10 +20,7 @@ struct ChessEngine {
         return nil
     }
     
-    mutating func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
-        guard let movingPiece = pieceAt(col: fromCol, row: fromRow) else {
-            return
-        }
+    mutating func movePiece(piece movingPiece: ChessPiece, toCol: Int, toRow: Int) {
         pieces.remove(movingPiece)
         pieces.insert(ChessPiece(col: toCol, row: toRow, imageName: movingPiece.imageName))
     }
@@ -95,5 +92,36 @@ struct ChessEngine {
             return "black"
         }
         return "Invalid Piece"
+    }
+    
+    mutating func isMoveValid(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) -> Bool {
+        
+        //checking if the source location contains a piece
+        guard let movingPiece = pieceAt(col: fromCol, row: fromRow) else {
+            return false
+        }
+        
+        //checking if the moving piece is within the board frame
+        if toCol < 0 || toCol > 7 || toRow < 0 || toRow > 7 {
+            return false
+        }
+        
+        //pieces rules
+        if identifyPiece(movingPiece) == "Knight" {
+            return isValidKnightMove(for: movingPiece, fromRow: fromRow, fromCol: fromCol, toRow: toRow, toCol: toCol)
+        }
+        return false
+    }
+    
+    mutating func isValidKnightMove(for movingPiece: ChessPiece, fromRow: Int, fromCol: Int, toRow: Int, toCol: Int) -> Bool {
+        if (abs(toCol - fromCol) == 1 && abs(toRow - fromRow) == 2) || (abs(toCol - fromCol) == 2 && abs(toRow - fromRow) == 1) {
+            if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                pieces.remove(pieceAt(col: toCol, row: toRow)!)
+            } else if pieceAt(col: toCol, row: toRow) != nil && identifyPieceColor(movingPiece) == identifyPieceColor(pieceAt(col: toCol, row: toRow)!) {
+                return false
+            }
+            return true
+        }
+        return false
     }
 }
