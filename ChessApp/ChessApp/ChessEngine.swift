@@ -189,7 +189,7 @@ struct ChessEngine {
                 if pieceAt(col: toCol, row: toRow) != nil {
                     return false
                 }
-                movePiece(piece: pieceAt(col: 7, row: 0)!, toCol: 5, toRow: 0)
+                movePiece(piece: pieceAt(col: 0, row: 0)!, toCol: 3, toRow: 0)
                 return true
             }
         }
@@ -205,7 +205,7 @@ struct ChessEngine {
                 if pieceAt(col: toCol, row: toRow) != nil {
                     return false
                 }
-                movePiece(piece: pieceAt(col: 7, row: 7)!, toCol: 5, toRow: 7)
+                movePiece(piece: pieceAt(col: 0, row: 7)!, toCol: 3, toRow: 7)
                 return true
             }
         }
