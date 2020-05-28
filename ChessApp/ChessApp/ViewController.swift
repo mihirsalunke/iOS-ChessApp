@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import PromiseKit
-import Foundation
 
 class ViewController: UIViewController {
     
@@ -582,8 +581,6 @@ extension ViewController {
 
                         let toCol = reverseMappedToMove[0]
                         let toRow = reverseMappedToMove[1]
-                        
-                        //print("fromCol= \(fromCol) fromRow= \(fromRow) toCol \(toCol) toRow= \(toRow)")
                                             
                         seal.fulfill((fromCol, fromRow, toCol, toRow))
                     }
