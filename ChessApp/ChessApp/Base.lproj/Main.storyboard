@@ -15,33 +15,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chess" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hef-3f-eGT">
-                                <rect key="frame" x="139" y="105" width="136" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7sK-3t-XsT">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chess" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hef-3f-eGT">
+                                <rect key="frame" x="140.66666666666666" y="108" width="132.99999999999997" height="71"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="50"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Poc-WU-s54">
-                                <rect key="frame" x="111" y="251" width="193" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <state key="normal" title="Single Player"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Poc-WU-s54">
+                                <rect key="frame" x="104" y="359" width="206" height="62"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="35"/>
+                                <state key="normal" title="Single Player">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="singleplayer" id="N5J-Qx-Sk0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1Y-hp-bz7">
-                                <rect key="frame" x="124" y="351" width="166" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <state key="normal" title="Multiplayer"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1Y-hp-bz7">
+                                <rect key="frame" x="118.66666666666669" y="446" width="177" height="62"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="35"/>
+                                <state key="normal" title="Multiplayer">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="multiplayer" id="8pk-vE-0ET"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Poc-WU-s54" firstAttribute="centerX" secondItem="ldk-gL-n1I" secondAttribute="centerX" id="ARx-K7-Biz"/>
+                            <constraint firstItem="hef-3f-eGT" firstAttribute="centerX" secondItem="ldk-gL-n1I" secondAttribute="centerX" id="C4M-D9-vAo"/>
+                            <constraint firstItem="7sK-3t-XsT" firstAttribute="bottom" secondItem="ldk-gL-n1I" secondAttribute="bottom" id="IrA-9q-WCD"/>
+                            <constraint firstItem="i1Y-hp-bz7" firstAttribute="top" secondItem="Poc-WU-s54" secondAttribute="bottom" constant="25" id="Pnz-WQ-Ubg"/>
+                            <constraint firstItem="7sK-3t-XsT" firstAttribute="trailing" secondItem="ldk-gL-n1I" secondAttribute="trailing" id="QWV-7X-oii"/>
+                            <constraint firstItem="hef-3f-eGT" firstAttribute="top" secondItem="JXt-XY-FBf" secondAttribute="top" constant="20" id="Xpt-Bs-oxk"/>
+                            <constraint firstItem="Poc-WU-s54" firstAttribute="top" secondItem="hef-3f-eGT" secondAttribute="bottom" constant="180" id="e7V-K3-8HS"/>
+                            <constraint firstItem="7sK-3t-XsT" firstAttribute="leading" secondItem="ldk-gL-n1I" secondAttribute="leading" id="lI6-Ss-ujj"/>
+                            <constraint firstItem="7sK-3t-XsT" firstAttribute="top" secondItem="ldk-gL-n1I" secondAttribute="top" id="njY-vp-oem"/>
+                            <constraint firstItem="i1Y-hp-bz7" firstAttribute="centerX" secondItem="ldk-gL-n1I" secondAttribute="centerX" id="yZH-Hl-0Zm"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="JXt-XY-FBf"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chess" id="7oE-8F-tiP"/>
@@ -58,27 +74,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F3a-61-Yn4">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="75e-Hy-Y4b" customClass="BoardView" customModule="ChessApp" customModuleProvider="target">
                                 <rect key="frame" x="47" y="288" width="320" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Display Turn" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ME-Cx-LIN">
-                                <rect key="frame" x="118" y="783" width="179" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOc-FU-4uh">
+                                <rect key="frame" x="97.666666666666686" y="108" width="219" height="49"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="34"/>
+                                <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Display Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOc-FU-4uh">
-                                <rect key="frame" x="103" y="125" width="209" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Turn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ME-Cx-LIN">
+                                <rect key="frame" x="114.66666666666669" y="788" width="185" height="49"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="34"/>
+                                <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9ME-Cx-LIN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9lL-Lz-EX9"/>
+                            <constraint firstItem="F3a-61-Yn4" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="CUA-5h-pxZ"/>
+                            <constraint firstItem="F3a-61-Yn4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Cx4-9P-8oR"/>
+                            <constraint firstItem="cOc-FU-4uh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Y8a-l3-AJd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9ME-Cx-LIN" secondAttribute="bottom" constant="25" id="YZF-Sp-Mrm"/>
+                            <constraint firstItem="F3a-61-Yn4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eAl-UL-uYB"/>
+                            <constraint firstItem="F3a-61-Yn4" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="iWm-Ua-Jo5"/>
+                            <constraint firstItem="cOc-FU-4uh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lUC-Kg-W6h"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chess Game" id="UEv-El-nfn"/>
