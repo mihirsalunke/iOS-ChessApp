@@ -34,6 +34,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let deviceHeight = UIDevice.current.detectDeviceSize()
+        let boardDimention = boardView.getBoardDimention(height: deviceHeight)
+        boardView.setBoardDimention(boardDimention: boardDimention)
+        boardView.setSquareSize(boardDimention: boardDimention)
+        boardView.resetBoardConstrains(boardDimention: boardDimention)
+        
         chessEngine.initializeGame()
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
@@ -611,4 +617,12 @@ extension ViewController {
             }//end of alamofire
         }//end of promise
     }//end of function checkGameStatus()
+}
+
+extension UIDevice {
+    
+    func detectDeviceSize() -> Int{
+        let height = UIScreen.main.bounds.size.height
+        return Int(height)
+    }
 }
