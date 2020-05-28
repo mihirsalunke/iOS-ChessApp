@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import PromiseKit
+import Foundation
 
 class ViewController: UIViewController {
     
@@ -106,6 +107,16 @@ class ViewController: UIViewController {
     func updateStatus(message: String, color: UIColor) {
         lblDisplayStatus.text = message
         lblDisplayStatus.textColor = color
+    }
+    
+    func isAITurn() -> Bool {
+        if AIColor == "white" && isWhiteTurn {
+            return true
+        }
+        if AIColor == "black" && !isWhiteTurn {
+            return true
+        }
+        return false
     }
     
     func getNewGameURL() -> String {
@@ -228,7 +239,6 @@ class ViewController: UIViewController {
             }
             
             self.getNewGame()
-            
         }))
         
         self.present(box, animated: true, completion: nil)
@@ -255,10 +265,45 @@ class ViewController: UIViewController {
             }
             
             self.getNewGame()
-            
         }))
         
         self.present(box, animated: true, completion: nil)
+    }
+    
+    func getAIMoveURL() -> String {
+        return "\(getNewGameURL())/move/ai"
+    }
+    
+    func makeAIMove() {
+        getAIMove()
+        .done { (fromCol, fromRow, toCol, toRow) in
+            self.movePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
+            self.nextTurn()
+            self.updateStatus(message: "AI has played", color: #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1))
+            self.checkGameStatus()
+            .done { (gameStatus) in
+                if gameStatus == "check mate" {
+                    self.updateStatus(message: "check mate...!!", color: #colorLiteral(red: 0.866481483, green: 0, blue: 0, alpha: 1))
+                    self.gameOver()
+                } else {
+                    self.updateStatus(message: gameStatus, color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
+                }
+            }
+            .catch { error in
+                print(error)
+            }
+        }
+        .catch { error in
+            print(error)
+        }
+    }
+    
+    func getSimulatePlayerMoveURL() -> String {
+        if gameMode == "singleplayer" {
+            return "\(getNewGameURL())/move/player"
+        } else {
+            return "\(getNewGameURL())/move"
+        }
     }
     
     func mapMoves(row: Int, col: Int) -> String {
@@ -361,6 +406,39 @@ class ViewController: UIViewController {
 extension ViewController: ChessDelegate {
     
     func makePlayerMove(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
+        let fromMove = mapMoves(row: fromRow, col: fromCol)
+        let toMove = mapMoves(row: toRow, col: toCol)
+        
+        //call api to make move
+        simulatePlayerMove(from: fromMove, to: toMove)
+        .done { (fromCol, fromRow, toCol, toRow) in
+            self.movePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
+            self.nextTurn()
+            self.checkGameStatus()
+            .done { (gameStatus) in
+                if gameStatus == "check mate" {
+                    self.updateStatus(message: "check mate...!!", color: #colorLiteral(red: 0.866481483, green: 0, blue: 0, alpha: 1))
+                    self.gameOver()
+                } else if gameStatus == "game draw" {
+                    self.updateStatus(message: "Game is draw..!!", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
+                    self.gameDraw()
+                } else {
+                    self.updateStatus(message: gameStatus, color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
+                }
+                if self.isAgainstAI && self.isAITurn() {
+                    self.makeAIMove()
+                }
+            }
+            .catch { error in
+                print(error)
+            }
+        }
+        .catch { error in
+            print(error)
+        }
+    }
+    
+    func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
         
         //get move in chess notation
         let fromMove = mapMoves(row: fromRow, col: fromCol)
@@ -374,4 +452,163 @@ extension ViewController: ChessDelegate {
         boardView.pieces = chessEngine.pieces
         boardView.setNeedsDisplay()
     }
+}
+
+extension ViewController {
+    
+    func simulatePlayerMove(from source: String, to destination: String) -> Promise<(Int, Int, Int, Int)> {
+        let simulatePlayerMove = getSimulatePlayerMoveURL()
+        
+        return Promise<(Int, Int, Int, Int)> { seal -> Void in
+            print("making api call to simulate player move at url: \(simulatePlayerMove)")
+            print("----------------------------------------------")
+            print("with parameters: game_id=\(gameID!), from=\(source), to=\(destination)")
+            print("----------------------------------------------")
+            Alamofire.request(simulatePlayerMove, method: .post, parameters: ["game_id": gameID!, "from": source, "to": destination], encoding: JSONEncoding.default).responseJSON { response in
+                print("response is: \(response)")
+                print("----------------------------------------------")
+                if response.result.isSuccess {
+                    
+                    let resJSON: JSON = JSON(response.result.value!)
+                    let status = resJSON["status"].stringValue
+                    
+                    if status == "error: invalid move!" {
+                        let genericError = NSError(
+                            domain: "Simulating Move",
+                            code: 0,
+                            userInfo: [NSLocalizedDescriptionKey: "Invalid move"])
+                        self.updateStatus(message: status, color: #colorLiteral(red: 0.866481483, green: 0, blue: 0, alpha: 1))
+                        seal.reject(genericError)
+                    }
+                    
+                    if status == "error: The game has expired OR you didn't put the game_id as the parameter!" {
+                        let genericError = NSError(
+                            domain: "Simulating Move",
+                            code: 0,
+                            userInfo: [NSLocalizedDescriptionKey: "Game expired"])
+                        
+                        seal.reject(genericError)
+                        
+                        self.updateStatus(message: "Game Expired...", color: #colorLiteral(red: 0.866481483, green: 0, blue: 0, alpha: 1))
+                        let box = UIAlertController(title: "Sorry, the Game Expired", message: "Want to restart the game?", preferredStyle: .alert)
+
+                        box.addAction(UIAlertAction(title: "Yes", style: .default, handler: {
+                            action in
+                                    
+                            self.chessEngine.initializeGame()
+                            self.boardView.pieces = self.chessEngine.pieces
+                            self.boardView.setNeedsDisplay()
+                                
+                            self.boardView.chessDelegate = self
+                                
+                            if self.isAgainstAI {
+                                self.promptForColorSelection(viewController: self)
+                            }
+                            self.getNewGame()
+                        }))
+
+                        box.addAction(UIAlertAction(title: "Go back to main menu", style: .default, handler: {
+                            action in
+                            self.performSegue(withIdentifier: "backToMainMenu", sender: self)
+                        }))
+                                    
+                        self.present(box, animated: true, completion: nil)
+                    }
+                    
+                    if status == "figure moved" {
+                        print("status is: \(status)")
+                        self.updateStatus(message: status, color: #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1))
+                        let reverseMappedFromMove = self.reverseMapMoves(move: source)
+                        let reverseMappedToMove = self.reverseMapMoves(move: destination)
+
+                        let fromCol = reverseMappedFromMove[0]
+                        let fromRow = reverseMappedFromMove[1]
+
+                        let toCol = reverseMappedToMove[0]
+                        let toRow = reverseMappedToMove[1]
+                        
+                        seal.fulfill((fromCol, fromRow, toCol, toRow))
+                    }
+                }
+                
+                if response.error != nil {
+                    seal.reject(response.error!)
+                }
+                
+            }//end of Alamofire
+        }//end of Promise
+    }//end of function simulatePlayerMove()
+    
+    func getAIMove() -> Promise<(Int, Int, Int, Int)> {
+        let AIMoveURL = getAIMoveURL()
+        self.updateStatus(message: "AI is thinking...", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
+        return Promise<(Int, Int, Int, Int)> { seal -> Void in
+            print("making api call to get AI move at url: \(AIMoveURL)")
+            print("----------------------------------------------")
+            print("with parameters: game_id=\(gameID!)")
+            print("----------------------------------------------")
+            
+            Alamofire.request(AIMoveURL, method: .post, parameters: ["game_id": gameID!], encoding: JSONEncoding.default).responseJSON { response in
+                print("response is: \(response)")
+                print("----------------------------------------------")
+                
+                if response.result.isSuccess {
+                    let aiResponseJSON: JSON = JSON(response.result.value!)
+                    if aiResponseJSON["from"].exists() && aiResponseJSON["to"].exists() {
+                        
+                        let fromMove = aiResponseJSON["from"].stringValue
+                        let toMove = aiResponseJSON["to"].stringValue
+                        
+                        let reverseMappedFromMove = self.reverseMapMoves(move: fromMove)
+                        let reverseMappedToMove = self.reverseMapMoves(move: toMove)
+
+                        let fromCol = reverseMappedFromMove[0]
+                        let fromRow = reverseMappedFromMove[1]
+
+                        let toCol = reverseMappedToMove[0]
+                        let toRow = reverseMappedToMove[1]
+                        
+                        //print("fromCol= \(fromCol) fromRow= \(fromRow) toCol \(toCol) toRow= \(toRow)")
+                                            
+                        seal.fulfill((fromCol, fromRow, toCol, toRow))
+                    }
+                }
+                
+                if response.error != nil {
+                    seal.reject(response.error!)
+                }
+                if response.result.isFailure {
+                    seal.reject(response.error!)
+                }
+                
+            }//end of Alamofire
+        }//end of Promise
+    }//end of function getAIMove()
+    
+    func checkGameStatus() -> Promise<String> {
+        let checkGameOverURL = getCheckGameOverURL()
+        
+        return Promise<String> { seal -> Void in
+            print("making api call to check if game is over at url: \(checkGameOverURL)")
+            print("----------------------------------------------")
+            print("with parameters: game_id=\(gameID!)")
+            print("----------------------------------------------")
+            Alamofire.request(checkGameOverURL, method: .post, parameters: ["game_id": gameID!], encoding: JSONEncoding.default).responseJSON { response in
+                print("response is: \(response)")
+                print("----------------------------------------------")
+                
+                if response.result.isSuccess {
+                    let statusJSON: JSON = JSON(response.result.value!)
+                    let status = statusJSON["status"].stringValue
+                    print("check mate status is: \(status)")
+                    
+                    seal.fulfill(status)
+                }
+                
+                if response.error != nil {
+                    seal.reject(response.error!)
+                }
+            }//end of alamofire
+        }//end of promise
+    }//end of function checkGameStatus()
 }

@@ -189,7 +189,7 @@ struct ChessEngine {
                 if pieceAt(col: toCol, row: toRow) != nil {
                     return false
                 }
-                movePiece(piece: pieceAt(col: 0, row: 0)!, toCol: 3, toRow: 0)
+                movePiece(piece: pieceAt(col: 7, row: 0)!, toCol: 5, toRow: 0)
                 return true
             }
         }
@@ -205,7 +205,7 @@ struct ChessEngine {
                 if pieceAt(col: toCol, row: toRow) != nil {
                     return false
                 }
-                movePiece(piece: pieceAt(col: 0, row: 7)!, toCol: 3, toRow: 7)
+                movePiece(piece: pieceAt(col: 7, row: 7)!, toCol: 5, toRow: 7)
                 return true
             }
         }
@@ -255,8 +255,8 @@ struct ChessEngine {
             if (toCol == fromCol - 1) || (toCol == fromCol + 1) {
                 if fromRow == 4 && toRow == 5 && identifyPieceColor(movingPiece) == "black" {
                     if pieceAt(col: toCol, row: toRow) == nil {
-                        if pieceAt(col: toCol, row: toRow - moveForward) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow - moveForward)!) {
-                            pieces.remove(pieceAt(col: toCol, row: toRow - moveForward)!)
+                        if pieceAt(col: toCol, row: toRow + moveForward) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow + moveForward)!) {
+                            pieces.remove(pieceAt(col: toCol, row: toRow + moveForward)!)
                             return true
                         }
                     }
@@ -265,8 +265,8 @@ struct ChessEngine {
             if (toCol == fromCol - 1) || (toCol == fromCol + 1) {
                 if fromRow == 3 && toRow == 2 && identifyPieceColor(movingPiece) == "white" {
                     if pieceAt(col: toCol, row: toRow) == nil {
-                        if pieceAt(col: toCol, row: toRow - moveForward) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow - moveForward)!) {
-                            pieces.remove(pieceAt(col: toCol, row: toRow - moveForward)!)
+                        if pieceAt(col: toCol, row: toRow + moveForward) != nil && identifyPieceColor(movingPiece) != identifyPieceColor(pieceAt(col: toCol, row: toRow + moveForward)!) {
+                            pieces.remove(pieceAt(col: toCol, row: toRow + moveForward)!)
                             return true
                         }
                     }
