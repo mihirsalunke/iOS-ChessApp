@@ -425,7 +425,7 @@ extension ViewController: ChessDelegate {
                 if gameStatus == "check mate" {
                     self.updateStatus(message: "check mate...!!", color: #colorLiteral(red: 0.866481483, green: 0, blue: 0, alpha: 1))
                     self.gameOver()
-                } else if gameStatus == "game draw" {
+                } else if gameStatus == "draw" {
                     self.updateStatus(message: "Game is draw..!!", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
                     self.gameDraw()
                 } else {
