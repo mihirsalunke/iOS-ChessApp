@@ -107,7 +107,7 @@ class ViewController: UIViewController {
     
     func updateTurnOnScreen() {
         lblDisplayTurn.text = isWhiteTurn ? "White's turn" : "Black's turn"
-        lblDisplayTurn.textColor = isWhiteTurn ? #colorLiteral(red: 0.979090035, green: 0.963788569, blue: 1, alpha: 1) : #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1)
+        lblDisplayTurn.textColor = isWhiteTurn ? #colorLiteral(red: 0.7445825934, green: 0.5974277854, blue: 0, alpha: 1) : #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1)
     }
     
     func updateStatus(message: String, color: UIColor) {
