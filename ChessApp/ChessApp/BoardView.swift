@@ -27,15 +27,15 @@ class BoardView: UIView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         let fingerLocation = touch.location(in: self)
-        fromCol = Int(fingerLocation.x / 40)
-        fromRow = Int(fingerLocation.y / 40)
+        fromCol = Int(fingerLocation.x / CGFloat(squareSize))
+        fromRow = Int(fingerLocation.y / CGFloat(squareSize))
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         let fingerLocation = touch.location(in: self)
-        let toCol = Int(fingerLocation.x / 40)
-        let toRow = Int(fingerLocation.y / 40)
+        let toCol = Int(fingerLocation.x / CGFloat(squareSize))
+        let toRow = Int(fingerLocation.y / CGFloat(squareSize))
         chessDelegate?.makePlayerMove(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
     }
     
