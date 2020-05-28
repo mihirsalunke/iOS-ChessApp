@@ -428,6 +428,15 @@ extension ViewController: ChessDelegate {
                 } else if gameStatus == "draw" {
                     self.updateStatus(message: "Game is draw..!!", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
                     self.gameDraw()
+                } else if gameStatus == "in stalemate" {
+                    self.updateStatus(message: "Game is draw..!!", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
+                    self.gameDraw()
+                } else if gameStatus == "in threefold repetition" {
+                    self.updateStatus(message: "Game is draw..!!", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
+                    self.gameDraw()
+                } else if gameStatus == "insufficient material" {
+                    self.updateStatus(message: "Game is draw..!!", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
+                    self.gameDraw()
                 } else {
                     self.updateStatus(message: gameStatus, color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
                 }
