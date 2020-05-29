@@ -1,1 +1,1 @@
-# iOS-chess
+# iOS-ChessApp
