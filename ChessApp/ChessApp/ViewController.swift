@@ -91,6 +91,8 @@ class ViewController: UIViewController {
             self.userColor = "black"
             self.AIColor = "white"
             self.isWhiteTurn = true
+            //make AI move
+            self.makeAIMove()
             print("Player is: \(action.title!)")
             print("----------------------------------------------")
             self.updateTurnOnScreen()
