@@ -438,6 +438,33 @@ extension ViewController: ChessDelegate {
                 } else if gameStatus == "insufficient material" {
                     self.updateStatus(message: "Game is draw..!!", color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
                     self.gameDraw()
+                } else if gameStatus == "error: The game has expired OR you didn't put the game_id as the parameter!" {
+                    
+                    self.updateStatus(message: "Game Expired...", color: #colorLiteral(red: 0.866481483, green: 0, blue: 0, alpha: 1))
+                    let box = UIAlertController(title: "Sorry, the Game Expired", message: "Want to restart the game?", preferredStyle: .alert)
+
+                    box.addAction(UIAlertAction(title: "Yes", style: .default, handler: {
+                        action in
+                                
+                        self.chessEngine.initializeGame()
+                        self.boardView.pieces = self.chessEngine.pieces
+                        self.boardView.setNeedsDisplay()
+                            
+                        self.boardView.chessDelegate = self
+                            
+                        if self.isAgainstAI {
+                            self.promptForColorSelection(viewController: self)
+                        }
+                        self.getNewGame()
+                    }))
+
+                    box.addAction(UIAlertAction(title: "Go back to main menu", style: .default, handler: {
+                        action in
+                        self.performSegue(withIdentifier: "backToMainMenu", sender: self)
+                    }))
+                                
+                    self.present(box, animated: true, completion: nil)
+                    
                 } else {
                     self.updateStatus(message: gameStatus, color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
                 }
