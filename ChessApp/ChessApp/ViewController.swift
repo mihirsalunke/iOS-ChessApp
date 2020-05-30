@@ -468,7 +468,7 @@ extension ViewController: ChessDelegate {
                 } else {
                     self.updateStatus(message: gameStatus, color: #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1))
                 }
-                if self.isAgainstAI && self.isAITurn() {
+                if self.isAgainstAI && self.isAITurn() && gameStatus != "check mate" && gameStatus != "draw" {
                     self.makeAIMove()
                 }
             }
